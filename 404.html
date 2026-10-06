@@ -19,6 +19,14 @@
   // on a root domain causes an endless /route/?/&/~and~... redirect loop.
   var pathSegmentsToKeep = 0;
   var l = window.location;
+  // Loop guard / self-heal: if we're already carrying the encoded "?/" query
+  // from an earlier redirect and still hit this 404, redirecting again would
+  // just stack more "&/~and~" onto the URL forever. Instead strip the query
+  // and trailing slashes (e.g. /meet-team/?/&/~and~... -> /meet-team) and
+  // retry the clean path once.
+  if (l.search.charAt(1) === '/') {
+    l.replace(l.pathname.replace(/\/+$/, '') || '/');
+  } else
   l.replace(
     l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
     l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
