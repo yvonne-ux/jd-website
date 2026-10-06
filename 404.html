@@ -13,10 +13,11 @@
   // history.replaceState before the page's own router reads location.
   // Standard technique: https://github.com/rafgraph/spa-github-pages
   //
-  // pathSegmentsToKeep = 1 because this is a GitHub Pages *project* site
-  // (served under /jd-website/, not a custom domain). If a custom domain is
-  // ever added, this must change to 0.
-  var pathSegmentsToKeep = 1;
+  // pathSegmentsToKeep = 0 because the site is served from the root of a
+  // custom domain (jondavidsongroup.com on Cloudflare Pages). It was 1 when
+  // this was a GitHub Pages project site under /jd-website/; leaving it at 1
+  // on a root domain causes an endless /route/?/&/~and~... redirect loop.
+  var pathSegmentsToKeep = 0;
   var l = window.location;
   l.replace(
     l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
