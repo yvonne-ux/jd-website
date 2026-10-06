@@ -2071,9 +2071,18 @@ footer{background:var(--white);color:var(--gray-600);padding:56px 0 28px;border-
     'solution-interim-management': 'retained-executive-search', 'solution-career-transition': 'retained-executive-search', 'solution-contingency-recruitment': 'retained-executive-search', 'contract-staffing': 'retained-executive-search', 'solution-payroll-outsourcing': 'retained-executive-search', 'solution-training-consultancy': 'retained-executive-search'
   };
 
+  // The hamburger menu is active up to the 1240px breakpoint (see the
+  // @media (max-width:1240px) rule), so it must close on navigation at any
+  // width up to that — not just phone widths.
   function closeMobileMenu(){
-    if (window.innerWidth <= 680) { navLinksEl.style.display = 'none'; }
+    if (window.innerWidth <= 1240) { navLinksEl.style.display = 'none'; }
   }
+  // If the window grows past the breakpoint (e.g. a tablet rotated to
+  // landscape) drop the inline styles the hamburger toggle set, so the
+  // regular desktop nav comes back instead of staying hidden.
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1240) { navLinksEl.removeAttribute('style'); }
+  });
 
   // Set once the logo-splash's first fly-away has revealed the home page —
   // guards against replaying the headline (via showRoute) before the splash
