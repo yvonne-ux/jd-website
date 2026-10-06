@@ -796,7 +796,7 @@ footer{background:var(--white);color:var(--gray-600);padding:56px 0 28px;border-
         <div class="nav-dropdown-menu">
           <div class="nav-dropdown-menu-inner">
             <a href="about" data-route="about">Why We Are Here</a>
-            <a href="meet-team" data-route="meet-team">Meet Our Team</a>
+            <a href="meet-team" data-route="meet-team" data-anchor="team" data-anchor-jump>Meet Our Team</a>
           </div>
         </div>
       </div>
@@ -925,7 +925,7 @@ footer{background:var(--white);color:var(--gray-600);padding:56px 0 28px;border-
 <section class="story-split">
   <div class="story-split-text">
     <h2><span class="split-line split-line-top">we go</span> <span class="split-line split-line-bottom">the distance</span></h2>
-    <a href="meet-team" data-route="meet-team" class="btn btn-primary story-split-cta">Meet Our Team</a>
+    <a href="meet-team" data-route="meet-team" data-anchor="team" data-anchor-jump class="btn btn-primary story-split-cta">Meet Our Team</a>
   </div>
   <div class="story-split-photo" role="img" aria-label="The JonDavidson leadership team"></div>
 </section>
@@ -2209,7 +2209,9 @@ footer{background:var(--white);color:var(--gray-600);padding:56px 0 28px;border-
       if (anchorId) {
         requestAnimationFrame(() => {
           const target = document.getElementById(anchorId);
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // data-anchor-jump: jump straight there (used when the target is far
+          // down a long page, so we don't animate through everything above it).
+          if (target) target.scrollIntoView({ behavior: el.hasAttribute('data-anchor-jump') ? 'instant' : 'smooth', block: 'start' });
         });
       }
     });
